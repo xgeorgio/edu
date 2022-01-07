@@ -1,0 +1,242 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1253">
+   <meta name="Author" content="Harris Georgiou">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win98; I) [Netscape]">
+   <title>SNS - Help page</title>
+</head>
+<body>
+
+<center>
+<h1>
+S.N.S. - Simple Naming Service (Java/RMI)</h1></center>
+
+<center>
+<h3>
+</h3></center>
+Χάρης Γεωργίου
+<p><i>Πανεπιστήμιο Αθηνών - Τμήμα Πληροφορικής,</i>
+<br><i>Μεταπτυχιακό Πρόγραμμα Σπουδών,</i>
+<br><i>Τομέας Επεξεργασίας Σήματος &amp; Υπολογιστικών Συστημάτων</i>
+<br>&nbsp;
+<p>
+<hr WIDTH="100%">
+<br>&nbsp;
+<h2>
+Εισαγωγή</h2>
+Η παρούσα σελίδα περιγράφει τη δομή και τη λειτουργία της εφαρμογής SNS
+που παρουσιάζει τον τρόπο χρήσης του RMI (Remote Method Invocation) της
+Java, για την κατασκευή ενός απλού κατανεμημένου Naming Service.
+<h2>
+1.&nbsp; Γενική Περιγραφή</h2>
+Η εφαρμογή SNS αποτελεί παράδειγμα χρήσης τεχνικών RMI (Remote Method Invocation)
+για την υλοποίηση μιας απλής naming service. Η εφαρμογή δουλεύει σύμφωνα
+με το μοντέλο client-server και οι βασικές λειτουργίες που υπηστηρίζει
+είναι οι εξής:
+<blockquote>
+<ul>
+<li>
+<b>register </b>( svr_name, svr_version, interface, address )</li>
+
+<li>
+<b>unregister </b>( svr_name, svr_version )</li>
+
+<li>
+<b>lookup </b>( svr_name, svr_version, interface )</li>
+</ul>
+</blockquote>
+Οι πρώτες δύο χρησιμοποιούνται για την καταχώρηση και διαγραφή interfaces
+στο μητρώο της υπηρεσίας, σύμφωνα με το όνομα και την έκδοση του αντίστοιχου
+server. Η τρίτη χρησιμοποιείται για την ανάκτηση της αντίστοιχης διεύθυνσης
+για κάποιο συγκεκριμένο interface.
+<br>&nbsp;
+<h2>
+2. Λειτουργία</h2>
+
+<h3>
+2.1 Κατανομή</h3>
+Για την κατασκευή της υπηρεσίας SNS χρησιμοποιούνται τεχνικές RMI για την
+απομακρυσμένη πρόσβαση στις λειτουργίες της υπηρεσίας από clients. Επειδή
+το ζητούμενο είναι ο μεγαλύτερος δυνατός διαφάνειας ως προς την κατανομή,
+κατά την εκκίνηση του server εγγράφεται τοπικά ένα αρχείο (SNSRemote.cfg)
+με τις απαραίτητες πληροφορίες σχετικά με την τρέχουσα διεύθυνση και θύρα
+της υπηρεσίας RMI (rmiregistry), καθώς και το όνομα με το οποίο έχει καταχωρηθεί.
+Το αρχείο αυτό μπορεί να διανέμεται μαζί με όλα τα απαραίτητα αρχεία της
+εφαρμογής για το πρόγραμμα του client, επιτυγχάνοντας δυναμική ενημέρωση
+του client ως προς τον τρόπο πρόσβασης στον server.
+<br>&nbsp;
+<h3>
+2.2 Μητρώο</h3>
+Η καταχώρηση των εγγραφών στον server γίνεται εσωτερικά σε μητρώο που έχει
+τη δομή πολυεπίπεδου πίνακα κατακερματισμού. Στην πραγματικότητα το μητρώο
+περιλαμβάνει δύο πίνακες κατακερματισμού (Hashtable) από τους οποίους ο
+πρώτος χρησιμοποιείται ως ευρετήριο για τον δεύτερο. Κάθε νέα αίτηση καταχώρισης
+χωρίζεται σε δύο τμήματα: name/version και interface/address. Το πρώτο
+ζεύγος καταχωρείται στο ευρετήριο για μετέπειτα αναφορά στο συγκεκριμένο
+όνομα και έκδοση, ενώ καταχωρήσεις interface/address γίνονται στο δεύτερο
+πίνακα σε μορφή πίνακα κατακερματισμού (δεύτερο επίπεδο), σε συσχέτιση
+με την αντίστοιχη εγγραφή στο ευρετήριο. Έτσι ανα πάσα στιγμή είναι διαθέσιμες
+όλες οι πληροφορίες (interface/address) με τη μορφή υπό-ευρετηρίου για
+κάποιο συγκεκριμένο server/version. Σε περίπτωση διαγραφής κάποιου server
+από το μητρώο, απλά καταστρέφεται ολόκληρο το αντίστοιχο υπο-ευρετήριο.
+Φυσικά η τεχνική των πολυεπίπεδων πινάκων κατακερματιμού δεν είναι ιδιαίτερα
+αποτελεσματική για μεγάλο μέγεθος μητρώου, όμως για τη συγκεκριμένη εφαρμογή
+αρκεί για την εξασφάλιση μιας δυναμικής και απλής (ως προς την πρόσβαση
+και διαχείριση) δομής καταχώρησης των εγγραφών.
+<br>&nbsp;
+<h2>
+3. Υλοποίηση</h2>
+
+<h3>
+3.1 Δομή Κώδικα</h3>
+Ο κώδικας της εφαρμογής αποτελείται από δύο σύνολα πηγαίων αρχείων. Το
+πρώτο αφορά τον κώδικα του server και το δεύτερο τον κώδικα του client.
+Εκτός από το πηγαίο αρχείο του client, όλα τα υπόλοιπα αρχεία αφορούν την
+εφαρμογή του server.
+<br>&nbsp;
+<blockquote>
+<blockquote><tt>SNSException</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; .</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; . . . . SNSNotFoundException</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SNSRemote . . . . SNSRemoteImpl</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>SNSKey - - - - - +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SNSRecord - - - - - - - +</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>SNSValue - - - - +</tt>
+<br>&nbsp;
+<br>&nbsp;
+<p><tt>(SNSNotFoundException) - - +</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SNSClient</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>(SNSRemote)&nbsp; - - - - - - - +</tt></blockquote>
+</blockquote>
+
+<p><br>Στο παραπάνω σχήμα παρουσίαζεται η λειτουργική (παύλες) και η ιεραρχική
+(τελείες) εξάρτηση μεταξύ των μονάδων. Οι κλάσεις SNSException και SNSNotFoundException
+υλοποιούν αντίστοιχα την γενική κλάση εξαίρεσης και την εξαίρεση μη εύρεσης
+του ζητούμενου interface. Οι κλάσεις SNSKey, SNSValue και SNSRecord χρησιμοποιούνται
+για τη διαχείριση του μητρώου καταχώρισης των εγγραφών. Η κλάση SNSRemote
+αποτελεί το remote interface που χρησιμοποιείται από κοινού από τον client
+(πρόσβαση) και από τον server (υλοποίηση). Το κύριο πρόγραμμα του client
+είναι το SNSClient, ενώ το κύριο πρόγραμμα του server είναι το SNSRemoteImpl.
+<br>&nbsp;
+<h3>
+3.2 Διασύνδεση &amp; Εγκατάσταση</h3>
+Η εφαρμογή αποτελείται από το πρόγραμμα του server και το πρόγραμμα του
+client. Για τη σωστή διασύνδεση και λειτουργία των προγραμμάτων προτείνεται
+η παρακάτω διαδικασία μεταγλώττισης:
+<blockquote>α) Μεταγλώττιση προγράμματος server:
+<br><tt>&nbsp;&nbsp;&nbsp; /svr:&nbsp; javac *.java</tt>
+<br>β) Δημιουργία αρχείων stub και skeleton:
+<br><tt>&nbsp;&nbsp;&nbsp; /svr:&nbsp; rmic SNSRemoteImpl</tt>
+<br>γ) Αντιγραφή απαραίτητων αρχείων στον client:
+<br><tt>&nbsp;&nbsp;&nbsp; copy *.class:&nbsp; SNSException, SNSNotFoundException,
+SNSKey, SNSRemote, SNSRemoteImpl_Stub</tt>
+<br>δ) Μεταγλώττιση προγράμματος client:
+<br><tt>&nbsp;&nbsp;&nbsp; /cli:&nbsp; javac *.java</tt>
+<br><tt></tt>&nbsp;</blockquote>
+
+<h3>
+3.3 Εκτέλεση</h3>
+Για τη σωστή λειτουργία του RMI registry θα πρέπει το πρόγραμμα rmiregistry
+να εκτελεστεί από τον κατάλογο που βρίσκεται το πρόγραμμα του server. Στη
+συνέχεια μπορεί να ξεκινήσει το πρόγραμμα του server. Εμφανίζεται η τρέχουσα
+διεύθυνση και θύρα και κατασκευάζεται το αρχείο διαμόρφωσης SNSRemote.cfg,
+το οποίο θα πρέπει να αντιγραφεί στον κατάλογο του προγράμματος του client.
+Τέλος, μπορεί να ξεκινήσει το πρόγραμμα του client, το οποίο εκτελεί τέσσερις
+βασικές κλήσεις στον server: register, lookup, unregister, lookup. Με την
+πρώτη κλήση καταχωρείται μια εγγραφή interface, με τη δεύτερη δοκιμάζεται
+η ανάκτηση της διεύθυνσης του interface, ενώ με την τρίτη διαγράφεται η
+εγγραφή από το μητρώο. Η τελευταία κλήση χρησιμοποιείται για δοκιμή της
+συμπεριφοράς σε περίπτωση μη εύρεσης του ζητούμενου interface. Τα αποτελέσματα
+των ενεργειών εμφανίζονται στο πρόγραμμα του client, ενώ οι κλήσεις που
+λαμβάνει ο server εμφανίζονται κατά την εξυπηρέτησή τους.
+<br>&nbsp;
+<h2>
+4. Τεχνικές Πληροφορίες</h2>
+
+<h3>
+4.1 Παρατηρήσεις</h3>
+
+<ul>
+<li>
+Λόγω προβλημάτων στην δημιουργία διασυνδέσεων (RMI socket connections)
+ακόμα και σε τοπικό επίπεδο, λόγω των αυστηρών περιορισμών που θέτει ο
+κάθε SecurityManager, στην τελική εφαρμογή δεν χρησιμοποιείται ενεργός
+RMISecurityManager.</li>
+
+<li>
+Στην έκδοση 1.2 του JDK υπάρχουν κάποιες διαφοροποιήσεις σχετικά με το
+RMI API. Συγκεκριμένα, αντί του UnicastRemoteServer χρησιμοποιείται το
+UnicastRemoteObject και αντί του StubSecurityManager το RMISecurityManager.</li>
+
+<li>
+Αν και η αναφορά της Sun σχετικά με το RMI API και το πρόγραμμα rmiregistry
+αναφέρει ότι το remote stub μπορεί να μεταφέρεται αυτόματα στον client
+χωρίς παρέμβαση από το χρήστη, παρόλα αυτά κάτι τέτοιο δεν φαίνεται να
+λειτουργεί. Επιπλέον, κατά την εκκίνηση του rmiregistry ο τρέχον κατάλογος
+πρέπει να είναι ο ίδιος με αυτόν που βρίσκονται όλα τα αρχεία του server
+της εφαρμογής, γιατί σε διαφορετική περίπτωση δεν λειτουργεί το stub αρχείο
+που χρησιμοποιείται από το registry.</li>
+</ul>
+
+<h3>
+4.2 Ανάπτυξη</h3>
+Περιβάλλον ανάπτυξης:
+<ul>
+<li>
+O.S.:&nbsp; MS-Windows98, MS-WindowsNT, RedHat Linux 4.2</li>
+
+<li>
+Java:&nbsp; Sun's Java 2 JDK 1.2.2, Guava/Kaffe (GNU/Linux)</li>
+
+<li>
+H/W:&nbsp; iPentium/133-32MB, amdAthlon-K7/500-128MB, SunSPARC/station4-16MB</li>
+
+<li>
+Net:&nbsp; TCP/IP on EtherLAN, TCP/IP on PPP (both local &amp; remote)</li>
+</ul>
+
+<h3>
+4.3 Βιβλιογραφία-Αναφορές</h3>
+
+<ul>
+<li>
+"Hacking Java - The Java Professional's Resource Kit", Mark Wutka, QUE
+- 1997.</li>
+
+<li>
+"Java Quick Reference", Michael Afergan, QUE - 1996.</li>
+
+<li>
+"White Paper: Java Remote Method Invocation - Distributed Computing for
+Java", Sun Microsystems - 1999.</li>
+</ul>
+
+<p><br>
+<hr WIDTH="100%">
+<br>Last updated: 15-Apr-2000.
+<br>Harris Georgiou
+<br>&nbsp;
+</body>
+</html>
