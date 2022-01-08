@@ -1,0 +1,11 @@
+procedure test1
+ok      :   bool;
+arr1    :   array [10]of int;
+idx     :   int;
+i,j,k   :   int;
+
+begin
+    arr1[idx] := i*i+i*(j*j)+i*j*(k*k);
+    arr1[idx+1] := -j+k;
+    ok := not (ok and not ok)
+end 

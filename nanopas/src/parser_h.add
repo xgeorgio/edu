@@ -1,0 +1,6 @@
+/***   WARNING: If program "build.bat" is not used to create "parser_t.h",
+                the following line must be added  manually on top of the
+                header file created by bison.                        ***/
+
+#include "entry.h"
+
