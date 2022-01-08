@@ -7,7 +7,7 @@ Educational material and sample codes
   <li>Dijkstra: Find shortest path between nodes in a weighted graph.</li>
   <li>Func-root: Function root and minimum finding in C.</li>
   <li>Mini-SQL: Example RDBMS for local-file database in C.</li>
-  <li>nano-PAS: Example compiler for for Pascal-like language in C.<li>
+  <li>nano-PAS: Example compiler for for Pascal-like language in C.</li>
   <li>Opposite: Simple minimax graph search demo game.</li>
   <li>Quantum: Quantum numbers calculations.</li>
   <li>Date/Time Reminder in Delphi/Pascal (win32).</li>
