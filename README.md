@@ -14,8 +14,11 @@ Educational material and sample codes
   <li>SNS: Simple Naming Service in Java RMI.</li>
   <li>SDGS: Simple Distributed Group Service.</li>
   <li>SILCA: Simple Internal Lights Calculator.</li>
+  <li>FRLR-1p: 1-pass Fixed Rate Linear Resampler.</li>
   <li>Splines: 3rd-degree Spline Interpolation - Best fit.</li>
   <li>System Uptime in Delphi/Pascal (win32).</li>
+  <li>Game-of-Life in Pascal.</li>
+  <li>GTree: Game board template classes in C++.</li>
 </ul>
 
 Licenced under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)<br/>
