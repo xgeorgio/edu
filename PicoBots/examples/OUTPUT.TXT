@@ -1,0 +1,35 @@
+PICOBOTS v0.12 (2014.04.13-Alpha-T64K) - Tiny model variant (ANSI C)
+Copyright (c) 2014 by Harris Georgiou
+
+Heap memory available: 30336
+
+PBenv: Initializing...
+PBenv: Using SSORT-INTRNL sorting, MATH-STDLIB math lib, TT800-96 prng engine.
+PBenv: Dynamic memory allocated = 4227 bytes
+PBenv: Created 145 picobots in pool.
+PBenv: PRNG initialized (lastrnd=0.535983)
+PBenv: Generating world (5x29)....
+
+PBenv: Kernel started successfully, Sun Feb 21 02:03:56 2021
+
+TEST: env_bqueue_createsorted()
+TEST: bot_generate_qla_actions()
+BotA[0]:	1 1 1 1 1 1 1 1 : (8)
+BotA[1]:	255 255 255 255 255 255 255 255 : (0)
+BotA[2]:	255 255 255 255 255 255 255 255 : (0)
+
+TEST: env_spot_ambient()
+ambient energy (env.age=0): 0
+ambient energy (env.age=60769): 0  [0...650]
+PBenv: Processing speed is 8.9845e-08 picobots per second.
+
+.............................
+.............................
+.............................
+.............................
+.............................
+Heap memory available: 26208
+
+PBenv: Shutting down...
+Heap memory available: 30336
+
