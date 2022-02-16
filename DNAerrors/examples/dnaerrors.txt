@@ -1,0 +1,29 @@
+DNA codon/protein decoding and error analysis
+Harris Georgiou (c) 2022
+
+TTT:Phe/F   TCT:Ser/S   TAT:Tyr/Y   TGT:Cys/C    
+TTC:Phe/F   TCC:Ser/S   TAC:Tyr/Y   TGC:Cys/C    
+TTA:Leu/L   TCA:Ser/S   TAA:Stop0   TGA:Stop0    
+TTG:Leu/L   TCG:Ser/S   TAG:Stop0   TGG:Trp/W    
+ 
+CTT:Leu/L   CCT:Pro/P   CAT:His/H   CGT:Arg/R    
+CTC:Leu/L   CCC:Pro/P   CAC:His/H   CGC:Arg/R    
+CTA:Leu/L   CCA:Pro/P   CAA:Gin/Q   CGA:Arg/R    
+CTG:Leu/L   CCG:Pro/P   CAG:Gin/Q   CGG:Arg/R    
+ 
+ATT:Ile/I   ACT:Thr/T   AAT:Asn/N   AGT:Ser/S    
+ATC:Ile/I   ACC:Thr/T   AAC:Asn/N   AGC:Ser/S    
+ATA:Ile/I   ACA:Thr/T   AAA:Lys/K   AGA:Arg/R    
+ATG:Met/M   ACG:Thr/T   AAG:Lys/K   AGG:Arg/R    
+ 
+GTT:Val/V   GCT:Ala/A   GAT:Asp/D   GGT:Gly/G    
+GTC:Val/V   GCC:Ala/A   GAC:Asp/D   GGC:Gly/G    
+GTA:Val/V   GCA:Ala/A   GAA:Glu/E   GGA:Gly/G    
+GTG:Val/V   GCG:Ala/A   GAG:Glu/E   GGG:Gly/G    
+ 
+total pairs = 4096  ->  total errors = 3852
+correct count: [64, 138, 30, 12]  ->  sum: 244 (5.96%)
+errors count: [0, 438, 1698, 1716]  ->  sum: 3852  (94.04%)
+baseline correct: 64  ->  augmented correct: 244 (+281.25%)
+efficiency (err=0,1,2,3): [1.000, 0.240, 0.017, 0.007]
+efficiency (Perr=0.10): [0.889, 0.024, 0.000, 0.000]  ->  0.913
