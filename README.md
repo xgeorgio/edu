@@ -15,6 +15,7 @@ Educational material and sample codes
   <li>SDGS: Simple Distributed Group Service.</li>
   <li>SILCA: Simple Internal Lights Calculator.</li>
   <li>FRLR-1p: 1-pass Fixed Rate Linear Resampler.</li>
+  <li>DNAerrors: Code-theoretic examination of the Universal Genetic Code.</li>
   <li>RL-dynamics: Reinforcement learning example</li>
   <li>Splines: 3rd-degree Spline Interpolation - Best fit.</li>
   <li>System Uptime in Delphi/Pascal (win32).</li>
