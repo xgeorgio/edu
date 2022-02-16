@@ -15,4 +15,4 @@ The main features of this single-file package are:
 	<li>Extensive memory use monitoring to track any memory leaks.</li>
 	<li>Skeleton of action-selection within Q-learning scheme for agents.</li>
 </ul>
-Note: Binary folder '/bin' contains two compiled versions, one created by GCC 9.3 in Windows 8.1 64-bit and one created by Turbo C 2.0 in DOSbox (16-bit). These are compilations of the exact same source code by compilers with more than four decades between them. This alone proves that, although C is not portable hardware-wise, it is extremely portable time-wise.
+<p>Note: Binary folder '/bin' contains two compiled versions, one created by GCC 9.3 in Windows 8.1 64-bit and one created by Turbo C 2.0 in DOSbox (16-bit). These are compilations of the exact same source code by compilers with more than four decades between them. This alone proves that, although C is not portable hardware-wise, it is extremely portable time-wise.</p>
