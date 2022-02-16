@@ -1,5 +1,5 @@
 Title:<br/>
-<b>PicoBots: Ultra-small A-life simulator in ANSI C.</b>
+<b>PicoBots: Ultra-small A-life simulator in ANSI C</b>
 
 Description:<br/>
 <p>This is an ultra-small A-life "bots" simulator for terminal (text mode) in ANSI C. The purpose of this programming exercise is to demonstrate that something as complex as reinforcement learning and zero-sum spatial board games can be implemented with minimal linked libraries and fit within a single DOS-mode (16-bit) memory segment including code and data.</p>
