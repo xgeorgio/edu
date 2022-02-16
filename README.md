@@ -19,6 +19,7 @@ Educational material and sample codes
   <li>Splines: 3rd-degree Spline Interpolation - Best fit.</li>
   <li>System Uptime in Delphi/Pascal (win32).</li>
   <li>Game-of-Life in Pascal.</li>
+  <li>PicoBots: Ultra-small A-life simulator in ANSI C.</li>
   <li>GTree: Game board template classes in C++.</li>
 </ul>
 
