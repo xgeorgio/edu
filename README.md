@@ -10,6 +10,7 @@ Educational material and sample codes
   <li>nano-PAS: Example compiler for for Pascal-like language in C.</li>
   <li>Opposite: Simple minimax graph search demo game.</li>
   <li>Quantum: Quantum numbers calculations.</li>
+  <li>Gene: Compact implementation of DNA/RNA gene processing in Java.</li>
   <li>Date/Time Reminder in Delphi/Pascal (win32).</li>
   <li>SNS: Simple Naming Service in Java RMI.</li>
   <li>SDGS: Simple Distributed Group Service.</li>
