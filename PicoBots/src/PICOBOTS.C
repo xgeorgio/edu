@@ -109,7 +109,7 @@
 /*... application-specific constants ...*/
 /* Note: Current max working pool size = 55x25 bots (ver 0.05a)*/
 #define		cScreenSizeX		29		/* use half the max column */
-#define		cScreenSizeY        5		/* use max line number
+#define		cScreenSizeY        5		/* use max line number */
 
 #define		cUseBufferedIO		1       /* unset to use setvbuf()=0 */
 
